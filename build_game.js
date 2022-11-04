@@ -106,6 +106,8 @@ function int_to_hex(num)
 function blendColor(c1, c2, percentage){
     let color1 = c1;
     let color2 = c2;
+
+    /*Convert hex char*/
     if (color1.length == 4)
         color1 = color1[1] + color1[1] + color1[2] + color1[2] + color1[3] + color1[3];
     else
@@ -115,9 +117,11 @@ function blendColor(c1, c2, percentage){
     else
         color2 = color2.substring(1);
     
+    /*Hex to int*/
     color1 = [parseInt(color1[0] + color1[1], 16), parseInt(color1[2] + color1[3], 16), parseInt(color1[4] + color1[5], 16)];
     color2 = [parseInt(color2[0] + color2[1], 16), parseInt(color2[2] + color2[3], 16), parseInt(color2[4] + color2[5], 16)];
 
+    /*Blending*/
     let color3 = [ 
         (1 - percentage) * color1[0] + percentage * color2[0], 
         (1 - percentage) * color1[1] + percentage * color2[1], 
@@ -148,6 +152,7 @@ function drawBricks(){
     }
 }
 
+/*Decrease immune status every draw frame*/
 function decreaseImst() {
     for(let c=0; c<brickColumnCount; c++){
         for(let r=0; r<brickRowCount; r++){
@@ -168,7 +173,7 @@ function collisionDetection(){
             let b = bricks[c][r];
             if(b.status!=0){
                 if(b.x < x && b.x+brickWidth > x && b.y < y && b.y+brickHeight > y) {
-                    if(b.immst!=0){
+                    if(b.immst!=0){ /*check immune*/
                         b.immst = brickImmuneframe;
                         continue;
                     }
